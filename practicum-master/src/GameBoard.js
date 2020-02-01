@@ -10,6 +10,7 @@ export default class GameBoard extends React.Component { //you have the class an
     constructor(props)
     {
         super(props);
+        this.status = '';
         this.state = {
             squares: Array(9).fill(null),
             xIsNext: true,
@@ -18,8 +19,9 @@ export default class GameBoard extends React.Component { //you have the class an
 
     handleClick(i) {
         const squares = this.state.squares.slice();
-        if(squares[i] === null ) {
+        if(squares[i] == null ) {
             squares[i] = this.state.xIsNext ? 'X' : 'O';
+            this.status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
         }
         this.setState({
             squares: squares,
@@ -42,14 +44,11 @@ export default class GameBoard extends React.Component { //you have the class an
 render () {//A render method is: render = property, the below function is the value
 
     const winner = calculateWinner(this.state.squares);
-    let status;
+
 
     if (winner) {
-        status = 'Winner: ' + winner;
-    } else {
-        status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        this.status = 'Winner: ' + winner;
     }
-
     return (
 
         <div className="container">
@@ -70,7 +69,7 @@ render () {//A render method is: render = property, the below function is the va
                 {this.eachSquare(7)}
                 {this.eachSquare(8)}
             </div>
-            <div className="status">{status}</div>
+            <div className="status">{this.status}</div>
             <GameInterface/>
 
         </div>
